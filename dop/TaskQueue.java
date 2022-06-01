@@ -2,6 +2,7 @@ package dop;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.NoSuchElementException;
 
 public class TaskQueue {
     LinkedList<MyTask> tasks;
@@ -16,12 +17,16 @@ public class TaskQueue {
         return results;
     }
 
-    public MyTask pop() {
-        return tasks.pop();
+    public MyTask pop() throws NoSuchElementException {
+        synchronized (tasks) {
+            return tasks.pop();
+        }
     }
 
     public void push(MyTask task) {
-        tasks.push(task);
+        synchronized (tasks) {
+            tasks.push(task);
+        }
     }
 
     public void showResults() {

@@ -4,13 +4,13 @@ import java.util.concurrent.TimeUnit;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-        final int n = 10;
+        final int n = 2000;
         int start = 2;
         int gap = 100;
         int stop = 100;
         TaskQueue queue = new TaskQueue();
         MyTask[] tasks = new MyTask[n];
-        Worker[] workers = new Worker[n];
+        Worker[] workers = new Worker[3];
 
 
         for (int i = 0; i < n; i++) {
@@ -22,13 +22,15 @@ public class Main {
         for (MyTask task : tasks)
             queue.push(task);
 
-        for (Worker worker : workers) {
-            worker = new Worker(queue.getResults(), queue.pop());
-            worker.start();
-            TimeUnit.MILLISECONDS.sleep(100);
+        for (int i = 0 ; i < 3; i++) {
+            workers[i] = new Worker(queue);
+            workers[i].start();
             queue.showResults();
             System.out.println();
         }
+
+        for (Worker worker : workers)
+            worker.join();
 
         queue.showResults();
 
