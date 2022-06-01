@@ -21,7 +21,7 @@ public class Client {
 
     public void transferMoney(Client other, int transferAmount) throws InterruptedException {
        synchronized (this) {
-           TimeUnit.MICROSECONDS.sleep(100);
+           //TimeUnit.MICROSECONDS.sleep(100);
            synchronized (other) {
                if (this.getMoneyAmount() >= transferAmount) {
                    other.changeMoneyAmount(transferAmount);
